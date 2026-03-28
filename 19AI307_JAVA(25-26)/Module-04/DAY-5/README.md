@@ -1,23 +1,26 @@
-# Ex.No:4(E) DESIGN PATTERN  ---- MEDIATOR PATTERN
+# Ex.No:5(E) MULTITHREADING -SYNCHRONIZATION
 
 ## QUESTION:
-Create a ChatRoom class (mediator) and two users (colleagues) who send and receive messages through it. No direct communication allowed.
+Maintain two int variables a and b, read their initial values from user. Use synchronized block to swap them and print swapped values.
 
 ## AIM:
-Implement the Mediator pattern using a ChatRoom class to manage communication between User objects, preventing direct interaction.
+To write a Java program that reads two integers from the user and swaps their values using a synchronized block to ensure thread-safe operations.
 
 ## ALGORITHM :
-1. Create a ChatRoom class that holds a collection of users, registers users using registerUser(), delivers messages using sendMessage(from, to, message).
+1. Read two integer values a and b from the user.
 
-2. Create a User class containing a user name, a reference to the ChatRoom mediator, a send() method that passes messages to the chat room, a receive() method to display incoming messages.
+2. Create a lock object to use inside the synchronized block.
 
-3. Read two user names and create User objects, automatically registering them with the chat room.
+3. Enter the synchronized block using the lock object.
 
-4. Read the number of chat exchanges.
+4. Swap the values of a and b using a temporary variable.
 
-5. For each exchange read sender, receiver, and message, call the corresponding user’s send() method.
+5. Exit the synchronized block once the swap is complete.
 
-6. Ensure all communication happens only through the mediator (ChatRoom), not directly between users.
+6. Print the swapped values of a and b.
+
+7. Close the scanner.
+
 
 
 
@@ -25,7 +28,7 @@ Implement the Mediator pattern using a ChatRoom class to manage communication be
 ## PROGRAM:
  ```
 /*
-Program to implement a  Pattern using Java
+Program to implement a Synchronization concept using Java
 Developed by: Junjar U
 RegisterNumber: 212224230110
 */
@@ -33,71 +36,23 @@ RegisterNumber: 212224230110
 
 ## SOURCE CODE:
 ```
-import java.util.*;
+import java.util.Scanner;
 
-class ChatRoom {
-    private Map<String, User> users = new HashMap<>();
-
-    public void registerUser(User user) {
-        users.put(user.getName(), user);
-    }
-
-    public void sendMessage(String from, String to, String message) {
-        User receiver = users.get(to);
-        if (receiver != null) {
-            receiver.receive(from, message);
-        } else {
-            System.out.println("User " + to + " not found");
-        }
-    }
-}
-
-class User {
-    private String name;
-    private ChatRoom chatRoom;
-
-    public User(String name, ChatRoom chatRoom) {
-        this.name = name;
-        this.chatRoom = chatRoom;
-        chatRoom.registerUser(this);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void send(String to, String message) {
-        chatRoom.sendMessage(name, to, message);
-    }
-
-    public void receive(String from, String message) {
-        System.out.println(from + " to " + name + ": " + message);
-    }
-}
-
-public class ChatApp {
+public class SwapUsingSynchronized {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        Object lock = new Object();
 
-        ChatRoom room = new ChatRoom();
-        User user1 = new User(sc.nextLine(), room); 
-        User user2 = new User(sc.nextLine(), room);
-
-        int n = Integer.parseInt(sc.nextLine());
-        for (int i = 0; i < n; i++) {
-            String sender = sc.nextLine();
-            String receiver = sc.nextLine();
-            String message = sc.nextLine();
-
-            if (sender.equals(user1.getName())) {
-                user1.send(receiver, message);
-            } else if (sender.equals(user2.getName())) {
-                user2.send(receiver, message);
-            } else {
-                System.out.println("Unknown sender");
-            }
+        synchronized (lock) {
+            int temp = a;
+            a = b;
+            b = temp;
         }
 
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
         sc.close();
     }
 }
@@ -105,13 +60,12 @@ public class ChatApp {
 
 
 ## OUTPUT:
-<img width="1143" height="846" alt="image" src="https://github.com/user-attachments/assets/e6ccf91b-1c65-4d94-bfdc-ddf4f68b9ad1" />
+<img width="457" height="390" alt="image" src="https://github.com/user-attachments/assets/2fb44153-47e4-4ac3-8872-e321e221fc56" />
 
 
 
 ## RESULT:
-Therefore the program successfully demonstrates message exchange using the Mediator Pattern, with all user communication routed through the ChatRoom.
-
+Therefore the program successfully swaps two integers within a synchronized block, ensuring safe and controlled access.
 
 
 
