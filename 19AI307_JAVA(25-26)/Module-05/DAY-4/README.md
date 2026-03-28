@@ -1,23 +1,25 @@
-# Ex.No:5(D) THREAD PRIORITY
+# Ex.No:5(E) MULTITHREADING -SYNCHRONIZATION
 
 ## QUESTION:
-Write a Java program to implement a extending thread class
+Maintain two int variables a and b, read their initial values from user. Use synchronized block to swap them and print swapped values.
 
 ## AIM:
-To write a Java program that demonstrates multithreading by creating a user-defined thread class that extends Thread and executes its own run() method.
+To write a Java program that reads two integers from the user and swaps their values using a synchronized block to ensure thread-safe operations.
 
 ## ALGORITHM :
-1. Create a class MyThread that extends the Thread class.
+1. Read two integer values a and b from the user.
 
-2. Override the run() method to print numbers from 1 to 5.
+2. Create a lock object to use inside the synchronized block.
 
-3. In the main() method: Print a message indicating the main thread execution.
+3. Enter the synchronized block using the lock object.
 
-4. Create an instance of MyThread.
+4. Swap the values of a and b using a temporary variable.
 
-5. Call the start() method to begin execution in a separate thread.
+5. Exit the synchronized block once the swap is complete.
 
-6. Allow the thread to run independently from the main thread.
+6. Print the swapped values of a and b.
+
+7. Close the scanner.
 
 
 
@@ -26,7 +28,7 @@ To write a Java program that demonstrates multithreading by creating a user-defi
 ## PROGRAM:
  ```
 /*
-Program to implement a Thread Priority Concept using Java
+Program to implement a Synchronization concept using Java
 Developed by: Junjar U
 RegisterNumber: 212224230110
 */
@@ -34,30 +36,37 @@ RegisterNumber: 212224230110
 
 ## SOURCE CODE:
 ```
-public class MyThread extends Thread {
-    public void run() {
-        for (int i = 1; i <= 5; i++) {
-            System.out.println("Thread: " + i);
-        }
-       
-    }
+import java.util.Scanner;
 
+public class SwapUsingSynchronized {
     public static void main(String[] args) {
-        System.out.println("Main thread finished");
-        MyThread t = new MyThread();
-        t.start();
+        Scanner sc = new Scanner(System.in);
+        int a = sc.nextInt();
+        int b = sc.nextInt();
+        Object lock = new Object();
+
+        synchronized (lock) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        System.out.println("a = " + a);
+        System.out.println("b = " + b);
+        sc.close();
     }
 }
 ```
 
 
 ## OUTPUT:
-<img width="612" height="355" alt="image" src="https://github.com/user-attachments/assets/b583e00e-99ec-4ea3-b48f-e1305b42e783" />
+<img width="457" height="390" alt="image" src="https://github.com/user-attachments/assets/2fb44153-47e4-4ac3-8872-e321e221fc56" />
 
 
 
 ## RESULT:
-Therefore the program successfully creates a separate thread by extending Thread and executes the overridden run() method.
+Therefore the program successfully swaps two integers within a synchronized block, ensuring safe and controlled access.
+
 
 
 
